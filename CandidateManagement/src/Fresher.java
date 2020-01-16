@@ -8,9 +8,8 @@ public class Fresher extends Candidate {
 
     public Fresher(String date, String rank, String id,
                    String fstName, String lstName, int birthDate, String address,
-                   String phone, String email, int type) {
-        super(id, fstName, lstName, birthDate, address, phone, email,
-                type);
+                   String phone, String email) {
+        super(id, fstName, lstName, birthDate, address, phone, email);
         graduationDate = date;
         graduationRank = rank;
     }

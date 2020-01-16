@@ -9,9 +9,8 @@ public class Internship extends Candidate {
 
     public Internship(String majorIn, String term, String colleage,
                       String id, String firstName, String lastName, int birthDate,
-                      String address, String phone, String email, int typeCandidate) {
-        super(id, firstName, lastName, birthDate, address, phone, email,
-                typeCandidate);
+                      String address, String phone, String email) {
+        super(id, firstName, lastName, birthDate, address, phone, email);
         major = majorIn;
         semester = term;
         university = colleage;

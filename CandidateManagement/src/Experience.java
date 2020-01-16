@@ -8,9 +8,8 @@ public class Experience extends Candidate {
 
     public Experience(int years, String skills,
                       String ID, String fstName, String lstName, int birth,
-                      String addr, String phone, String email, int type) {
-        super(ID, fstName, lstName, birth, addr, phone, email,
-                type);
+                      String addr, String phone, String email) {
+        super(ID, fstName, lstName, birth, addr, phone, email);
         yearsExperience = years;
         professionalSkills = skills;
     }

@@ -67,10 +67,10 @@ public class FileHandler {
         return new TextIterable(mySource, "\\n+");
     }
 
-    public static void write(String content){
+    public static void write(String content,String Path){
         FileWriter fileWriter = null;
         try {
-            fileWriter = new FileWriter("Test/output");
+            fileWriter = new FileWriter(Path);
             fileWriter.write(content);
             fileWriter.close();
         } catch (IOException e) {

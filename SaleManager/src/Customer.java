@@ -26,7 +26,7 @@ public class Customer {
     }
 
     Customer(String[] data) {
-        if (data.length == 3) {
+        if (data.length != 3) {
             System.err.println("WRONG DATA FOR CUSTOMER CLASS");
             return;
         }

@@ -2,20 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbdc0a7e-2e12-4ed0-9e80-cd83cccab050" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SaleManager/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SaleManager/Customer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SaleManager/FileHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SaleManager/FileHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SaleManager/General.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SaleManager/General.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SaleManager/List.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SaleManager/List.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SaleManager/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SaleManager/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SaleManager/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SaleManager/Product.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/General.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/General.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/List.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/List.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Product.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,6 +82,9 @@
       <workItem from="1579002744785" duration="614000" />
       <workItem from="1579055404014" duration="25246000" />
       <workItem from="1579131643516" duration="5626000" />
+      <workItem from="1579138239875" duration="1519000" />
+      <workItem from="1579140125794" duration="346000" />
+      <workItem from="1579140998694" duration="413000" />
     </task>
     <servers />
   </component>
@@ -98,7 +96,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

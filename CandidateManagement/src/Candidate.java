@@ -12,7 +12,7 @@ public class Candidate {
     public Candidate() {
     }
 
-    public Candidate(String ID, String fstName, String lstName, int birth, String addr, String phoneNumber, String prsEmail, int category) {
+    public Candidate(String ID, String fstName, String lstName, int birth, String addr, String phoneNumber, String prsEmail) {
         id = ID;
         firstName = fstName;
         lastName = lstName;
@@ -20,7 +20,6 @@ public class Candidate {
         address = addr;
         phone = phoneNumber;
         email = prsEmail;
-        type = category;
     }
 
     public String getId() {

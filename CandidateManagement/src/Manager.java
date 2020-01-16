@@ -44,7 +44,7 @@ public class Manager {
             System.out.print("Enter email: ");
             String email = Validation.checkInputEmail();
             Candidate candidate = new Candidate(id, firstName, lastName,
-                    birthDate, address, phone, email, type);
+                    birthDate, address, phone, email);
             //check id exist or not
             if (Validation.checkIdExist(candidateDict, id)) {
                 switch (type) {
@@ -79,7 +79,7 @@ public class Manager {
         candidateDict.get(0).add(new Experience(yearExperience, professionalSkill,
                 candidate.getId(), candidate.getFirstName(), candidate.getLastName(),
                 candidate.getBirthDate(), candidate.getAddress(),
-                candidate.getPhone(), candidate.getEmail(), candidate.getTypeCandidate()));
+                candidate.getPhone(), candidate.getEmail()));
         System.out.println("Create success.");
     }
 
@@ -93,8 +93,7 @@ public class Manager {
         candidateDict.get(1).add(new Fresher(graduationDate, graduationRank, candidate.getId(),
                 candidate.getFirstName(), candidate.getLastName(),
                 candidate.getBirthDate(), candidate.getAddress(),
-                candidate.getPhone(), candidate.getEmail(),
-                candidate.getTypeCandidate()));
+                candidate.getPhone(), candidate.getEmail()));
         System.out.println("Create success.");
     }
 
@@ -110,8 +109,7 @@ public class Manager {
         candidateDict.get(3).add(new Internship(major, semester, university, candidate.getId(),
                 candidate.getFirstName(), candidate.getLastName(),
                 candidate.getBirthDate(), candidate.getAddress(),
-                candidate.getPhone(), candidate.getEmail(),
-                candidate.getTypeCandidate()));
+                candidate.getPhone(), candidate.getEmail()));
         System.out.println("Create success.");
     }
 

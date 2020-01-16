@@ -34,7 +34,7 @@ public class General {
         }
         System.out.print("Enter your choice: ");
         int choice = input.nextInt();
-        while (choice <= idx || choice > size) {
+        while (choice <= 0 || choice > size) {
             System.out.println("Invalid input, stroke again: ");
             choice = input.nextInt();
         }
@@ -112,6 +112,24 @@ public class General {
         price = input.nextDouble();
         return new Product(code, name, quantity,saled,price);
     }
+    public static Product addCustomer(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the customer you want to add!");
+        String code, name;
+        int quantity, saled;
+        double price;
+        System.out.print("Product ID: ");
+        code = input.next();
+        System.out.print("Product Name: ");
+        name = input.next();
+        System.out.print("Quantity: ");
+        quantity = input.nextInt();
+        System.out.print("Number of the saled: ");
+        saled = input.nextInt();
+        System.out.println("How much ?");
+        price = input.nextDouble();
+        return new Product(code, name, quantity,saled,price);
+    }ad
     public static boolean isNull(List x){
         return x == null;
     }
