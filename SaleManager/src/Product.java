@@ -14,8 +14,14 @@ public class Product {
     private double price;
 
     Product(String productID, String name, int numOfPros, int saledPros, double pricePros) {
-        assert saledPros <= numOfPros : "Number of saled products cannot be greater than the quantity";
-        assert pCodeSet.contains(productID.toUpperCase()) : "Product ID is already existed !!!";
+        if (saledPros > numOfPros) {
+            System.err.println("Number of saled products cannot be greater than the quantity");
+            return;
+        }
+        if (pCodeSet.contains(productID.toUpperCase())) {
+            System.err.println("Product ID is already existed !!!");
+            return;
+        }
         pcode = productID;
         pro_name = name;
         quantity = numOfPros;
@@ -25,24 +31,34 @@ public class Product {
     }
 
     Product(String[] dataDump) {
-        assert dataDump.length == 5 : "WRONG DATA FOR PRODUCT CLASS";
-        assert Integer.parseInt(dataDump[3]) <= Integer.parseInt(dataDump[2]) : "Number of saled products cannot be greater than the quantity";
-        assert pCodeSet.contains(dataDump[0].toUpperCase()) : "Product ID is already existed !!!";
+        if (!(dataDump.length == 5)) {
+            System.err.println("WRONG DATA FOR PRODUCT CLASS");
+            return;
+        }
+        if (!(Integer.parseInt(dataDump[3]) <= Integer.parseInt(dataDump[2]))) {
+            System.err.println("Number of saled products cannot be greater than the quantity");
+            return;
+        }
+        if (pCodeSet.contains(dataDump[0].toUpperCase())) {
+            System.err.println("Product ID is already existed !!!");
+        }
         pcode = dataDump[0];
         pro_name = dataDump[1];
         quantity = Integer.parseInt(dataDump[2]);
         saled = Integer.parseInt(dataDump[3]);
         price = Double.parseDouble(dataDump[4]);
-        pCodeSet.add(dataDump[1].toUpperCase());
+        pCodeSet.add(dataDump[0].toUpperCase());
     }
 
     public String toString() {
-        return pcode + "|" + pro_name + "|" + quantity + "|" + saled + "|" + price + "|" + price;
+        return pcode + "|" + pro_name + "|" + quantity + "|" + saled + "|" + price;
     }
-    public static HashSet<String> getIDsCollection(){
+
+    public static HashSet<String> getIDsCollection() {
         return pCodeSet;
     }
-    public String getID(){
+
+    public String getID() {
         return pcode;
     }
 }

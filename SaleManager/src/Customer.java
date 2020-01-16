@@ -11,8 +11,14 @@ public class Customer {
     private static HashSet<String> customerIDs = new HashSet<>();
 
     Customer(String ID, String name, String phoneNumber) {
-        assert customerIDs.contains(ID.toUpperCase()) : "ID is already existed!!!";
-        assert phoneNumber.matches("//d{10,}") : "Phone must has 10 numbers long";
+        if (customerIDs.contains(ID.toUpperCase())) {
+            System.err.println("ID is already existed!!!");
+            return;
+        }
+        if (phoneNumber.matches("//d{10,}")) {
+            System.err.println("Phone must has 10 numbers long");
+            return;
+        }
         ccode = ID;
         cus_name = name;
         phone = phoneNumber;
@@ -20,9 +26,18 @@ public class Customer {
     }
 
     Customer(String[] data) {
-        assert data.length == 3 : "WRONG DATA FOR CUSTOMER CLASS";
-        assert customerIDs.contains(data[0].toUpperCase()) : "ID is already existed!!!";
-        assert data[2].matches("//d{10,}") : "Phone must has 10 numbers long";
+        if (data.length == 3) {
+            System.err.println("WRONG DATA FOR CUSTOMER CLASS");
+            return;
+        }
+        if (customerIDs.contains(data[0].toUpperCase())) {
+            System.err.println("ID is already existed!!!");
+            return;
+        }
+        if (data[2].matches("//d{10,}")) {
+            System.err.println("Phone must has 10 numbers long");
+            return;
+        }
         ccode = data[0];
         cus_name = data[1];
         phone = data[2];

@@ -5,7 +5,10 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code here
+
         Scanner input = new Scanner(System.in);
+        List products = null, customer = null;
+        ListNode res = null;
         while (true) {
             System.out.println("Show Menu: \n" +
                     "1.Product List\n" +
@@ -14,8 +17,6 @@ public class Main {
             int menu = input.nextInt(), choice = General.showMenu(menu);
             switch (menu) {
                 case 1:
-                    List products = null;
-                    ListNode res = null;
                     switch (choice){
                         case 1:
                             if(products == null){
@@ -26,14 +27,26 @@ public class Main {
                             General.loadData(path,products);
                             break;
                         case 2:
+                            if(General.isNull(products)){
+                                System.err.println("Products List has not been initialized");
+                                break;
+                            }
                             products.append(General.addProduct());
                             break;
                         case 3:
+                            if(General.isNull(products)){
+                                System.err.println("Products List has not been initialized");
+                                break;
+                            }
                             System.out.println("code |   Pro_name  |  Quantity  |  saled |  Price   |   Value \n" +
                                     "-------------------------------------------------------------------");
                             products.showAll();
                             break;
                         case 4:
+                            if(General.isNull(products)){
+                                System.err.println("Products List has not been initialized");
+                                break;
+                            }
                             FileHandler.write(products.getData());
                             System.out.println("Write Successful PATH: \"test/output\"");
                             break;
@@ -41,21 +54,34 @@ public class Main {
                             System.out.println("Enter pcode you wanna search: ");
                             res = General.search(input.next(),"pcode",products);
                             if(res == null){
-                                System.out.println("NOT EXITSTED");
+                                System.out.println("NOT EXISTED");
                             } else {
                                 System.out.println(res.val.toString());
                             }
                             break;
                         case 6:
-                            System.out.println("Enter pcode you wanna search: ");
+                            if(General.isNull(products)){
+                                System.err.println("Products List has not been initialized");
+                                break;
+                            }
+                            System.out.println("Enter pcode you wanna remove: ");
                             General.remove(input.next(),"pcode",Product.getIDsCollection(),products);
+                            products.showAll();
                             break;
                         case 7:
+                            if(General.isNull(products)){
+                                System.err.println("Products List has not been initialized");
+                                break;
+                            }
                             General.sortProduct(products);
                             System.out.println("Sorted!");
                             products.showAll();
                             break;
                         case 8:
+                            if(General.isNull(products)){
+                                System.err.println("Products List has not been initialized");
+                                break;
+                            }
                             System.out.println("Enter a code you wanna insert after it:");
                             res = General.search(input.next(),"pcode",products);
                             if(res == null){
@@ -65,10 +91,14 @@ public class Main {
                             }
                             break;
                         case 9:
+                            if(General.isNull(products)){
+                                System.err.println("Products List has not been initialized");
+                                break;
+                            }
                             System.out.println("Enter xCode you wanna delete from: ");
                             res = General.search(input.next(),"pcode",products);
                             if(res == null){
-                                System.out.println("NOT EXITSTED");
+                                System.out.println("NOT EXISTED");
                             } else {
                                 products.deleteRest(res);
                             }

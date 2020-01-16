@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class General {
@@ -33,7 +34,7 @@ public class General {
         }
         System.out.print("Enter your choice: ");
         int choice = input.nextInt();
-        while (choice <= idx || choice >= size) {
+        while (choice <= idx || choice > size) {
             System.out.println("Invalid input, stroke again: ");
             choice = input.nextInt();
         }
@@ -110,5 +111,8 @@ public class General {
         System.out.println("How much ?");
         price = input.nextDouble();
         return new Product(code, name, quantity,saled,price);
+    }
+    public static boolean isNull(List x){
+        return x == null;
     }
 }

@@ -70,7 +70,7 @@ public class FileHandler {
     public static void write(String content){
         FileWriter fileWriter = null;
         try {
-            fileWriter = new FileWriter("test/output");
+            fileWriter = new FileWriter("Test/output");
             fileWriter.write(content);
             fileWriter.close();
         } catch (IOException e) {

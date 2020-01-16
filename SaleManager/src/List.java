@@ -63,7 +63,7 @@ public class List {
     void remove(ListNode danmNode) {
         if(isEmpty() || danmNode == null) return;
         ListNode dummyNode = head;
-        while (Objects.equals(danmNode, dummyNode)) {
+        while (!Objects.equals(danmNode, dummyNode.next)) {
             dummyNode = dummyNode.next;
         }
         dummyNode.next = danmNode.next;
@@ -79,7 +79,7 @@ public class List {
                 if (((Product) n1.val).getID().compareTo(((Product) n2.val).getID()) > 0) {
                     nah = n1.val;
                     n1.val = n2.val;
-                    n2.val = n1.val;
+                    n2.val = nah;
                 }
                 n2 = n2.next;
             }
