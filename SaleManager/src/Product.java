@@ -61,6 +61,12 @@ public class Product {
     public String getID() {
         return pcode;
     }
+    public boolean isExhausted(){
+        return quantity <= saled;
+    }
+    public int getStock(){
+        return quantity - saled;
+    }
 }
 
 

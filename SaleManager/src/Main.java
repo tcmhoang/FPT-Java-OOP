@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -7,14 +8,16 @@ public class Main {
         // write your code here
 
         Scanner input = new Scanner(System.in);
-        List products = null, customer = null;
+        List products = null, customer = null, orders = null;
         ListNode res = null;
         String path = null;
-        while (true) {
+        boolean done = false;
+        while (!done) {
             System.out.println("Show Menu: \n" +
                     "1.Product List\n" +
                     "2.Customer List\n" +
-                    "3.Order List\n");
+                    "3.Order List\n" +
+                    "Any Other Key. Quit");
             int menu = input.nextInt(), choice = General.showMenu(menu);
             switch (menu) {
                 case 1:
@@ -76,7 +79,7 @@ public class Main {
                                 System.err.println("Products List has not been initialized");
                                 break;
                             }
-                            General.sortProduct(products);
+                            General.sort(products);
                             System.out.println("Sorted!");
                             products.showAll();
                             break;
@@ -110,6 +113,7 @@ public class Main {
                         default:
                             break;
                     }
+                    break;
                 case 2:
                     switch (choice) {
                         case 1:
@@ -167,7 +171,47 @@ public class Main {
                         default:
                             break;
                     }
+                    break;
                 case 3:
+                    switch (choice) {
+                        case 1:
+                            if (orders == null) {
+                                orders = new List();
+                            }
+                            if (General.isNull(products) || General.isNull(customer)) {
+                                System.err.println("Do not initialized Products List or Customers List");
+                                break;
+                            }
+                            Order temp =  General.addOrder(products, customer);
+                            if(General.isNull(temp)){
+                                break;
+                            }
+                            orders.append(temp);
+                            break;
+                        case 2:
+                            if (General.isNull(orders)) {
+                                System.err.println("Do not initialized Products List or Customers List");
+                                break;
+                            }
+                            System.out.println("Pcode |   C_name  |  Quality \n" +
+                                    "---------------------------------------");
+                            orders.showAll();
+                            break;
+                        case 3:
+                            if (General.isNull(orders)) {
+                                System.err.println("Do not initialized Products List or Customers List");
+                                break;
+                            }
+                            General.sort(orders, 2);
+                            orders.showAll();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    done = true;
+                    break;
             }
         }
     }

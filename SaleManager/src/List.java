@@ -69,7 +69,7 @@ public class List {
         dummyNode.next = danmNode.next;
     }
 
-    void sort() {
+    void sortProduct() {
         ListNode n1, n2;
         Object nah;
         n1 = head;
@@ -77,6 +77,24 @@ public class List {
             n2 = n1.next;
             while (n2 != null) {
                 if (((Product) n1.val).getID().compareTo(((Product) n2.val).getID()) > 0) {
+                    nah = n1.val;
+                    n1.val = n2.val;
+                    n2.val = nah;
+                }
+                n2 = n2.next;
+            }
+            n1 = n1.next;
+        }
+    }
+
+    void sortCustomer() {
+        ListNode n1, n2;
+        Object nah;
+        n1 = head;
+        while (n1 != null) {
+            n2 = n1.next;
+            while (n2 != null) {
+                if (((Customer) n1.val).getID().compareTo(((Customer) n2.val).getID()) > 0) {
                     nah = n1.val;
                     n1.val = n2.val;
                     n2.val = nah;

@@ -28,6 +28,9 @@ public class General {
                         "Sort  by pcode + ccode"
                 }
         };
+        if (idicator <= 0 || idicator > 3) {
+            return 100;
+        }
         int idx = idicator - 1, size = Menu[idx].length;
         for (int i = 0; i < size; i++) {
             System.out.println(idicator + "." + (i + 1) + " " + Menu[idx][i]);
@@ -91,10 +94,17 @@ public class General {
             list.remove(FoundNode);
         }
     }
-    public static void sortProduct(List list){
-        list.sort();
+
+    public static void sort(List list) {
+        list.sortProduct();
     }
-    public static Product addProduct(){
+
+    public static void sort(List list, int indicator) {
+        list.sortProduct();
+        list.sortCustomer();
+    }
+
+    public static Product addProduct() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the product you want to add!");
         String code, name;
@@ -110,9 +120,10 @@ public class General {
         saled = input.nextInt();
         System.out.println("How much ?");
         price = input.nextDouble();
-        return new Product(code, name, quantity,saled,price);
+        return new Product(code, name, quantity, saled, price);
     }
-    public static Product addCustomer(){
+
+    public static Product addCustomer() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the customer you want to add!");
         String code, name;
@@ -128,9 +139,43 @@ public class General {
         saled = input.nextInt();
         System.out.println("How much ?");
         price = input.nextDouble();
-        return new Product(code, name, quantity,saled,price);
-    }ad
-    public static boolean isNull(List x){
+        return new Product(code, name, quantity, saled, price);
+    }
+
+    public static Order addOrder(List products, List consumers) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the Order you want to add!");
+        String pcode, ccode;
+        int quantity;
+        System.out.print("Enter product code: ");
+        pcode = input.next();
+        System.out.print("Enter customer code: ");
+        ccode = input.next();
+        System.out.print("Enter quantity: ");
+        quantity = input.nextInt();
+//        If pcode not found in the products list or ccode not found in the customers list  then data is not accepted.
+        if (!Product.getIDsCollection().contains(pcode) || !Customer.getIDsCollection().contains(ccode)) {
+            System.err.println("INVALID DATA");
+            return null;
+        }
+//        If  both pcode and ccode are found in the order list  then  data is not accepted.
+        else if (Order.getOrdersCollections().contains(pcode) && Order.getOrdersCollections().contains(ccode)) {
+            System.err.println("EXISTED PCODE, PCODE");
+            return null;
+        } else if (((Product) Objects.requireNonNull(search(pcode, "pcode", products)).val).isExhausted() ||
+                ((Product) Objects.requireNonNull(search(pcode, "pcode", products)).val).getStock() < quantity)  {
+            System.err.println("NOT ENOUGH GOODS");
+            return null;
+        } else {
+            return new Order(pcode, ccode, quantity);
+        }
+    }
+
+    public static boolean isNull(List x) {
+        return x == null;
+    }
+
+    public static boolean isNull(Order x) {
         return x == null;
     }
 }
