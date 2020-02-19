@@ -2,10 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 public class Calculator implements ActionListener {
 
-    private float res = 0;
+    private double res = 0;
     private String intermittent = "0", operator = null;
 
     private JButton[] buttons = new JButton[16];
@@ -96,7 +97,21 @@ public class Calculator implements ActionListener {
 
 
     private void setDisplay() {
+        reformatBuffer();
         display.setText(intermittent);
+    }
+
+    private void reformatBuffer() {
+        int idx = intermittent.indexOf(".");
+        if (idx == -1 || intermittent.length() - idx == 1) return;
+        int lastIdxOfZero = -1;
+        char[] bufferArray = intermittent.toCharArray();
+        for (int i = intermittent.length() - 1; i > idx; i--) {
+            if (bufferArray[i] == '0') {
+                lastIdxOfZero = i;
+            }
+        }
+        intermittent = lastIdxOfZero != -1 ? intermittent.substring(0, lastIdxOfZero - 1) : intermittent;
     }
 
     private void handleNumbers(String number) {
@@ -119,7 +134,7 @@ public class Calculator implements ActionListener {
             case "=":
                 if (operator != null) {
                     intermittent = intermittent.equals("") ? "0" : intermittent;
-                    intermittent = String.valueOf(mathUp());
+                    intermittent = String.format("%.4f", mathUp());
                     operator = null;
                     res = 0;
                 }
@@ -127,22 +142,22 @@ public class Calculator implements ActionListener {
             default:
                 //Operator is null => res = 0
                 if (!intermittent.equals("")) {
-                    res = operator == null ? Float.parseFloat(intermittent) : mathUp();
+                    res = operator == null ? Double.parseDouble(intermittent) : mathUp();
                     intermittent = "";
                     operator = symbol;
                 }
         }
     }
 
-    private float mathUp() {
+    private Double mathUp() {
         if (operator.equals("+")) {
-            return Float.parseFloat(intermittent) + res;
+            return Double.parseDouble(intermittent) + res;
         } else if (operator.equals("-")) {
-            return Float.parseFloat(intermittent) - res;
+            return Double.parseDouble(intermittent) - res;
         } else if (operator.equals("×")) {
-            return Float.parseFloat(intermittent) * res;
+            return Double.parseDouble(intermittent) * res;
         } else {
-            return Float.parseFloat(intermittent) / res;
+            return Double.parseDouble(intermittent) / res;
         }
     }
 
