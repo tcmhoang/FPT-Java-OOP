@@ -9,7 +9,7 @@ public class Main {
             new JLabel("Second"),//2
             new JTextField("integer 1"),//3
             new JTextField("integer 2"),//4
-            new JButton("➕➕➕➕➕+➕➕"),//5
+            new JButton("+"),//5
             new JButton("-"),//6
             new JButton("×"),//7
             new JButton("÷"),//8
