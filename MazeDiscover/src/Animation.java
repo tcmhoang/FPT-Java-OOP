@@ -1,45 +1,31 @@
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Animation {
 
-    private int frameCount;                 // Counts ticks for change
-    private int frameDelay;                 // frame delay 1-12 (You will have to play around with this)
-    private int currentSegment;               // animations current frame
+    private int currentSegment;              // Current Segment
     private int totalSegments;                // total amount of frames for your animation
 
-    private boolean stop;                // has animations stopped
+    private List<ImageIcon> frames;    // Arraylist of frames
 
-    private List<BufferedImage> frames;    // Arraylist of frames
-
-    public Animation(BufferedImage[] imgs, int framePerSec) {
-        frameCount = 0;
-        frameDelay = framePerSec;
-        stop = false;
-        frames = Arrays.asList(imgs);
+    public Animation(BufferedImage[] imgs) {
         currentSegment = 0;
+        frames = Arrays.stream(imgs).map(ImageIcon::new).collect(Collectors.toList());
         totalSegments = frames.size();
-
     }
 
     public void update() {
-        if (!stop) {
-            frameCount++;
-
-            if (frameCount > frameDelay) {
-                frameCount = 0;
                 currentSegment += 1;
-
-                if (currentSegment > totalSegments - 1) {
+                if (currentSegment == totalSegments) {
                     currentSegment = 0;
                 }
-            }
-        }
 
     }
 
-    public BufferedImage getFrame(){
+    public ImageIcon getFrame(){
         return frames.get(currentSegment);
     }
 }

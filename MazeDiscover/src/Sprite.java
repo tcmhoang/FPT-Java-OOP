@@ -25,6 +25,6 @@ public class Sprite {
 
     public BufferedImage getTile(int row, int col)
     {
-        return sheet.getSubimage(row * title_size, col* title_size, title_size, title_size);
+        return sheet.getSubimage(col * title_size, row* title_size, title_size, title_size);
     }
 }
