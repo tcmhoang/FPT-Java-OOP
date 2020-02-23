@@ -1,11 +1,12 @@
+package Gooey.Model;
+
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.util.concurrent.TimeUnit;
 
 public class Figure {
     Animation UP, DOWN, LEFT, RIGHT;
 
-    Figure(String spriteSheet, int size) {
+    public Figure(String spriteSheet, int size) {
         Sprite obj = new Sprite(spriteSheet, size);
 
         BufferedImage[] downFrames = {obj.getTile(0, 0), obj.getTile(0, 1), obj.getTile(0, 2), obj.getTile(0, 3)};
@@ -40,10 +41,6 @@ public class Figure {
             default:
                 break;
         }
-    }
-
-    public void clear(JLabel component) {
-        component.setIcon(null);
     }
 
 }

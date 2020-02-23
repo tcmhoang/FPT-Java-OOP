@@ -1,3 +1,7 @@
+package Gooey.Model;
+
+import Utils.ResourceException;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;

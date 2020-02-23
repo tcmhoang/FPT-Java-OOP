@@ -75,6 +75,11 @@
       <workItem from="1582369181487" duration="42000" />
       <workItem from="1582369237504" duration="13139000" />
       <workItem from="1582418332505" duration="15544000" />
+      <workItem from="1582438055760" duration="2813000" />
+      <workItem from="1582441105188" duration="8129000" />
+      <workItem from="1582450549737" duration="257000" />
+      <workItem from="1582456282166" duration="607000" />
+      <workItem from="1582456904545" duration="4994000" />
     </task>
     <servers />
   </component>
@@ -94,42 +99,66 @@
       <screen x="0" y="29" width="1920" height="983" />
     </state>
     <state x="1232" y="326" key="#com.intellij.fileTypes.FileTypeChooser/0.29.1920.983@0.29.1920.983" timestamp="1582345296734" />
-    <state x="772" y="231" key="#com.intellij.ide.util.MemberChooser" timestamp="1582420149637">
+    <state x="772" y="231" key="#com.intellij.ide.util.MemberChooser" timestamp="1582442526025">
       <screen x="0" y="29" width="1920" height="983" />
     </state>
-    <state x="772" y="231" key="#com.intellij.ide.util.MemberChooser/0.29.1920.983@0.29.1920.983" timestamp="1582420149637" />
+    <state x="772" y="231" key="#com.intellij.ide.util.MemberChooser/0.29.1920.983@0.29.1920.983" timestamp="1582442526025" />
     <state x="647" y="251" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1582369219241">
       <screen x="0" y="29" width="1920" height="983" />
     </state>
     <state x="647" y="251" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.29.1920.983@0.29.1920.983" timestamp="1582369219241" />
+    <state x="1263" y="356" key="#com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodDialog" timestamp="1582445214615">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state x="1263" y="356" key="#com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodDialog/0.29.1920.983@0.29.1920.983" timestamp="1582445214615" />
     <state x="746" y="264" key="FileChooserDialogImpl" timestamp="1582289032566">
       <screen x="0" y="29" width="1920" height="983" />
     </state>
     <state x="746" y="264" key="FileChooserDialogImpl/0.29.1920.983@0.29.1920.983" timestamp="1582289032566" />
-    <state width="439" height="856" key="GridCell.Tab.0.bottom" timestamp="1582437956196">
+    <state width="487" height="858" key="GridCell.Tab.0.bottom" timestamp="1582461609884">
       <screen x="0" y="29" width="1920" height="983" />
     </state>
-    <state width="439" height="856" key="GridCell.Tab.0.bottom/0.29.1920.983@0.29.1920.983" timestamp="1582437956196" />
-    <state width="439" height="856" key="GridCell.Tab.0.center" timestamp="1582437956195">
+    <state width="487" height="858" key="GridCell.Tab.0.bottom/0.29.1920.983@0.29.1920.983" timestamp="1582461609884" />
+    <state width="487" height="858" key="GridCell.Tab.0.center" timestamp="1582461609883">
       <screen x="0" y="29" width="1920" height="983" />
     </state>
-    <state width="439" height="856" key="GridCell.Tab.0.center/0.29.1920.983@0.29.1920.983" timestamp="1582437956195" />
-    <state width="439" height="856" key="GridCell.Tab.0.left" timestamp="1582437956194">
+    <state width="487" height="858" key="GridCell.Tab.0.center/0.29.1920.983@0.29.1920.983" timestamp="1582461609883" />
+    <state width="487" height="858" key="GridCell.Tab.0.left" timestamp="1582461609883">
       <screen x="0" y="29" width="1920" height="983" />
     </state>
-    <state width="439" height="856" key="GridCell.Tab.0.left/0.29.1920.983@0.29.1920.983" timestamp="1582437956194" />
-    <state width="439" height="856" key="GridCell.Tab.0.right" timestamp="1582437956195">
+    <state width="487" height="858" key="GridCell.Tab.0.left/0.29.1920.983@0.29.1920.983" timestamp="1582461609883" />
+    <state width="487" height="858" key="GridCell.Tab.0.right" timestamp="1582461609884">
       <screen x="0" y="29" width="1920" height="983" />
     </state>
-    <state width="439" height="856" key="GridCell.Tab.0.right/0.29.1920.983@0.29.1920.983" timestamp="1582437956195" />
-    <state x="665" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1582418339747">
+    <state width="487" height="858" key="GridCell.Tab.0.right/0.29.1920.983@0.29.1920.983" timestamp="1582461609884" />
+    <state width="339" height="856" key="GridCell.Tab.1.bottom" timestamp="1582458233408">
       <screen x="0" y="29" width="1920" height="983" />
     </state>
-    <state x="665" y="345" key="com.intellij.ide.util.TipDialog/0.29.1920.983@0.29.1920.983" timestamp="1582418339747" />
-    <state x="617" y="133" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1582383936286">
+    <state width="339" height="856" key="GridCell.Tab.1.bottom/0.29.1920.983@0.29.1920.983" timestamp="1582458233408" />
+    <state width="339" height="856" key="GridCell.Tab.1.center" timestamp="1582458233408">
       <screen x="0" y="29" width="1920" height="983" />
     </state>
-    <state x="617" y="133" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.29.1920.983@0.29.1920.983" timestamp="1582383936286" />
+    <state width="339" height="856" key="GridCell.Tab.1.center/0.29.1920.983@0.29.1920.983" timestamp="1582458233408" />
+    <state width="339" height="856" key="GridCell.Tab.1.left" timestamp="1582458233408">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state width="339" height="856" key="GridCell.Tab.1.left/0.29.1920.983@0.29.1920.983" timestamp="1582458233408" />
+    <state width="339" height="856" key="GridCell.Tab.1.right" timestamp="1582458233408">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state width="339" height="856" key="GridCell.Tab.1.right/0.29.1920.983@0.29.1920.983" timestamp="1582458233408" />
+    <state x="665" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1582456906200">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state x="665" y="345" key="com.intellij.ide.util.TipDialog/0.29.1920.983@0.29.1920.983" timestamp="1582456906200" />
+    <state x="617" y="133" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1582442506017">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state x="617" y="133" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.29.1920.983@0.29.1920.983" timestamp="1582442506017" />
+    <state x="1177" y="301" key="extract.method.dialog" timestamp="1582438745778">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state x="1177" y="301" key="extract.method.dialog/0.29.1920.983@0.29.1920.983" timestamp="1582438745778" />
     <state x="430" y="139" key="new project wizard" timestamp="1582289041397">
       <screen x="0" y="29" width="1920" height="983" />
     </state>

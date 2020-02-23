@@ -1,3 +1,8 @@
+package Gooey;
+
+import Gooey.Model.Figure;
+import Utils.FileHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -18,15 +23,16 @@ public class Maze implements KeyListener {
     private Figure figure;
     private int ROWS, COLUMNS, str_row, str_col;
     private List<List<JLabel>> tiles = new ArrayList<>();
+    private JFrame canvas;
 
-    Maze(String mazeFileName) {
+    public Maze(String mazeFileName) {
         __init__(mazeFileName);
     }
 
     private void __init__(String file) {
         readMaze(file);
         getMazeInfo();
-        JFrame canvas = new JFrame("Maze Discovery");
+        canvas = new JFrame("Maze Discovery");
         canvas.setResizable(false);
         config_canvas(canvas);
         addTiles(canvas);
@@ -37,6 +43,13 @@ public class Maze implements KeyListener {
 
     }
 
+    public int getStr_row() {
+        return str_row;
+    }
+
+    public int getStr_col() {
+        return str_col;
+    }
 
     private void getMazeInfo() {
         ROWS = tiles.size();
@@ -51,7 +64,7 @@ public class Maze implements KeyListener {
     }
 
     private void readMaze(String path) {
-        FileHandler files = new FileHandler("assets/Maze");
+        FileHandler files = new FileHandler(path);
         int row_count = 0;
         for (String line : files.lines()) {
             String[] rowText = line.split("");
@@ -123,19 +136,8 @@ public class Maze implements KeyListener {
         }
     }
 
-    private void move(int old_row, int old_col) {
-        if (str_row > ROWS - 1 || str_row < 0 || str_col > COLUMNS - 1 || str_col < 0) {
-            str_row = old_row;
-            str_col = old_col;
-        }
-    }
-
-    private void move(int old_row, int old_col, String val) {
-        if (str_row > ROWS - 1 || str_row < 0 || str_col > COLUMNS - 1 || str_col < 0) {
-            str_row = old_row;
-            str_col = old_col;
-        }
-        tiles.get(str_row).get(str_col).setText(val);
+    private boolean isEligibleLoc(int row, int col) {
+        return !(row > ROWS - 1 || row < 0 || col > COLUMNS - 1 || col < 0);
     }
 
     private boolean isWall() {
@@ -147,7 +149,22 @@ public class Maze implements KeyListener {
     }
 
     private void updatePos(int row, int col, String val) {
-        move(row, col, val);
+        if (isEligibleLoc(row, col)) {
+            tiles.get(row).get(col).setText(!val.equals("") ? val : tiles.get(row).get(col).getText());
+            //Animate
+            String dir = checkChangedCoordinate(str_row, str_col, row, col);
+            int temp_col = str_col, temp_row = str_row;
+            str_col = col;
+            str_row = row;
+            tiles.get(temp_row).get(temp_col).setIcon(null);
+            updatePlayer();
+            figure.animate(Player, dir);
+            try {
+                TimeUnit.MILLISECONDS.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         Color color;
         switch (val) {
             case PART_OF_PATH:
@@ -175,13 +192,36 @@ public class Maze implements KeyListener {
         return str_row == 0 || str_row == ROWS - 1 || str_col == 0 || str_col == COLUMNS - 1;
     }
 
-    public  boolean search()
-    {
-        String standIn = tiles.get(str_row).get(str_col).getText();
-        if(standIn.equals(OBSTACLE)) return false;
-        if(standIn.equals(TRIED) || standIn.equals(DEAD_END)) return false;
-        if(isExit()) return true;
-        
+
+    public boolean search(int startRow, int startCol) {
+        if(isEligibleLoc(startRow,startCol))
+        {
+            try {
+                TimeUnit.MILLISECONDS.sleep(240);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            updatePos(startRow,startCol,"");
+            String standIn = tiles.get(startRow).get(startCol).getText();
+            if (standIn.equals(OBSTACLE)) return false;
+            if (standIn.equals(TRIED) || standIn.equals(DEAD_END)) return false;
+        }
+        if (isExit()) {
+            updatePos(startRow, startCol, PART_OF_PATH);
+            return true;
+        }
+        updatePos(startRow, startCol, TRIED);
+        boolean found = search(startRow - 1, startCol) ||
+                search(startRow + 1, startCol) ||
+                search(startRow, startCol - 1) ||
+                search(startRow, startCol + 1);
+
+        if (found) {
+            updatePos(startRow, startCol, PART_OF_PATH);
+        } else {
+            updatePos(startRow, startCol, DEAD_END);
+        }
+        return found;
     }
 
 
@@ -207,40 +247,39 @@ public class Maze implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
 
-        int key = e.getKeyCode(), old_col = str_col, old_row = str_row;
+        int key = e.getKeyCode(), col = str_col, row = str_row,
+                temp_col = str_col, temp_row = str_row;
 
         if (key == KeyEvent.VK_LEFT) {
-            str_col--;
+            col--;
         } else if (key == KeyEvent.VK_RIGHT) {
-            str_col++;
+            col++;
         } else if (key == KeyEvent.VK_UP) {
-            str_row--;
+            row--;
         } else if (key == KeyEvent.VK_DOWN) {
-            str_row++;
+            row++;
         }
-        String dir = checkChangedCoordinate(old_row, old_col);
-        move(old_row, old_col);
-        tiles.get(old_row).get(old_col).setIcon(null);
-        updatePlayer();
-        figure.animate(Player, dir);
-        updatePos(str_row, str_col, tiles.get(str_row).get(str_col).getText());
-        if(isWall())
+        updatePos(row,col,"");
+        dropBreadcrumb(Color.BLACK);
+        if (isWall()) {
+            dropBreadcrumb(Color.RED);
+            updatePos(temp_row, temp_col, "");
+            dropBreadcrumb(Color.BLACK);
+        }
+        if(isExit())
         {
-            tiles.get(str_row).get(str_col).setIcon(null);
-            str_col = old_col;
-            str_row = old_row;
-            updatePlayer();
-            figure.animate(Player,dir);
+            JOptionPane.showMessageDialog(canvas, "You Win!!!");
+            canvas.dispose();
         }
     }
 
-    private String checkChangedCoordinate(int old_row, int old_col) {
-        if (Math.abs(old_col - str_col) == 1) {
-            return str_col < old_col ? "RIGHT" : "LEFT";
-        } else if (Math.abs(old_row - str_row) == 1) {
-            return str_row > old_row ? "DOWN" : "UP";
+    private String checkChangedCoordinate(int old_row, int old_col, int str_r, int str_c) {
+        if (Math.abs(old_col - str_c) == 1) {
+            return str_c < old_col ? "RIGHT" : "LEFT";
+        } else if (Math.abs(old_row - str_r) == 1) {
+            return str_r > old_row ? "DOWN" : "UP";
         }
-        return null;
+        return "";
     }
 
     @Override

@@ -1,6 +1,8 @@
+package Utils;
+
 import java.util.Iterator;
 
-class TextIterable implements Iterable<String> {
+public class TextIterable implements Iterable<String> {
     private String[] myStrings;
 
     /**

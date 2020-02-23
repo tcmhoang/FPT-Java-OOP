@@ -1,3 +1,5 @@
+package Gooey.Model;
+
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
