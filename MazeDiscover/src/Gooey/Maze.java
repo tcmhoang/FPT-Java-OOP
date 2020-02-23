@@ -3,10 +3,13 @@ package Gooey;
 import Gooey.Model.Figure;
 import Utils.FileHandler;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -18,12 +21,18 @@ public class Maze implements KeyListener {
             TRIED = ".",
             OBSTACLE = "+",
             DEAD_END = "-",
-            PLAYER = "S";
+            PLAYER = "S",
+            COIN = "C",
+            MACE = "M";
+    private String MAZEFILE;
     private JLabel Player;
     private Figure figure;
-    private int ROWS, COLUMNS, str_row, str_col;
+    private int ROWS, COLUMNS, str_row, str_col, coin_col, totCoins;
     private List<List<JLabel>> tiles = new ArrayList<>();
     private JFrame canvas;
+    private List<Integer> idxCoins;
+
+    private ImageIcon coin, mace;
 
     public Maze(String mazeFileName) {
         __init__(mazeFileName);
@@ -37,7 +46,7 @@ public class Maze implements KeyListener {
         config_canvas(canvas);
         addTiles(canvas);
         canvas.setVisible(true);
-        showMaze(true);
+        showMaze(false);
         drawPlayer();
         canvas.addKeyListener(this);
 
@@ -64,7 +73,11 @@ public class Maze implements KeyListener {
     }
 
     private void readMaze(String path) {
+        totCoins = 0;
+        coin_col = 0;
+        idxCoins = new ArrayList<>();
         FileHandler files = new FileHandler(path);
+        MAZEFILE = path;
         int row_count = 0;
         for (String line : files.lines()) {
             String[] rowText = line.split("");
@@ -80,6 +93,12 @@ public class Maze implements KeyListener {
             }
             row_count++;
             tiles.add(row);
+        }
+        try {
+            coin = new ImageIcon(ImageIO.read(new File("assets/Coin.png")));
+            mace = new ImageIcon(ImageIO.read(new File("assets/Mace.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -97,24 +116,34 @@ public class Maze implements KeyListener {
     }
 
     private void showMaze(boolean showWalls) {
-        for (List<JLabel> row : tiles) {
-            for (JLabel tile : row) {
+        for (int i = 0; i < tiles.size(); i++) {
+            List<JLabel> row = tiles.get(i);
+            for (int j = 0; j < row.size(); j++) {
+                JLabel tile = row.get(j);
+                tile.setOpaque(true);
                 if (showWalls) {
 //                    try {
 //                        TimeUnit.MILLISECONDS.sleep(70);
 //                    } catch (InterruptedException e) {
 //                        e.printStackTrace();
 //                    }
-                    tile.setOpaque(true);
                     if (tile.getText().equals(OBSTACLE)) {
                         fillColor(tile, Color.GRAY);
                     } else {
                         fillColor(tile, Color.white);
                     }
+                    if (tile.getText().equals(COIN)) {
+                        tile.setIcon(coin);
+                        totCoins++;
+                        idxCoins.add(i);
+                        idxCoins.add(j);
+                    }
+                    if (tile.getText().equals(MACE)) {
+                        tile.setIcon(mace);
+                    }
                 } else {
-                    fillColor(tile, Color.lightGray);
+                    fillColor(tile, Color.WHITE);
                 }
-
             }
         }
     }
@@ -142,6 +171,14 @@ public class Maze implements KeyListener {
 
     private boolean isWall() {
         return tiles.get(str_row).get(str_col).getText().equals(OBSTACLE);
+    }
+
+    private boolean isMace() {
+        return tiles.get(str_row).get(str_col).getText().equals(MACE);
+    }
+
+    private boolean isCoin() {
+        return tiles.get(str_row).get(str_col).getText().equals(COIN);
     }
 
     private void dropBreadcrumb(Color color) {
@@ -173,6 +210,12 @@ public class Maze implements KeyListener {
             case OBSTACLE:
                 color = Color.RED;
                 break;
+            case MACE:
+                color = Color.MAGENTA;
+                break;
+            case COIN:
+                color = Color.yellow;
+                break;
             case TRIED:
                 color = Color.BLACK;
                 break;
@@ -193,15 +236,14 @@ public class Maze implements KeyListener {
     }
 
 
-    public boolean search(int startRow, int startCol) {
-        if(isEligibleLoc(startRow,startCol))
-        {
+    private boolean search(int startRow, int startCol) {
+        if (isEligibleLoc(startRow, startCol)) {
             try {
                 TimeUnit.MILLISECONDS.sleep(240);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            updatePos(startRow,startCol,"");
+            updatePos(startRow, startCol, "");
             String standIn = tiles.get(startRow).get(startCol).getText();
             if (standIn.equals(OBSTACLE)) return false;
             if (standIn.equals(TRIED) || standIn.equals(DEAD_END)) return false;
@@ -224,6 +266,10 @@ public class Maze implements KeyListener {
         return found;
     }
 
+    public void recursiveSearch(int startRow, int startCol) {
+        search(startRow, startCol);
+        restoreCoins();
+    }
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
@@ -246,7 +292,7 @@ public class Maze implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-
+        boolean isHittedMace = false;
         int key = e.getKeyCode(), col = str_col, row = str_row,
                 temp_col = str_col, temp_row = str_row;
 
@@ -259,17 +305,46 @@ public class Maze implements KeyListener {
         } else if (key == KeyEvent.VK_DOWN) {
             row++;
         }
-        updatePos(row,col,"");
+        updatePos(row, col, "");
         dropBreadcrumb(Color.BLACK);
         if (isWall()) {
             dropBreadcrumb(Color.RED);
             updatePos(temp_row, temp_col, "");
             dropBreadcrumb(Color.BLACK);
         }
-        if(isExit())
-        {
+        if (isMace()) {
+            dropBreadcrumb(Color.MAGENTA);
+            tiles.get(str_row).get(str_col).setIcon(mace);
+            updatePos(temp_row, temp_col, "");
+            dropBreadcrumb(Color.BLACK);
+            isHittedMace = true;
+        }
+        if (isCoin()) {
+            dropBreadcrumb(Color.yellow);
+            coin_col++;
+        }
+        if (isExit() && coin_col == totCoins) {
             JOptionPane.showMessageDialog(canvas, "You Win!!!");
             canvas.dispose();
+        }
+        if (isHittedMace) {
+            Object[] options = {"Yes, please",
+                    "No, thanks. I would rather die! :("};
+
+            int n = JOptionPane.showOptionDialog(canvas,
+                    "You Died. Would you like to play again ?",
+                    "A Silly Question",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]);
+            canvas.dispose();
+            if (n == 0) {
+                tiles = new ArrayList<>();
+                canvas = null;
+                __init__(MAZEFILE);
+            }
         }
     }
 
@@ -280,6 +355,15 @@ public class Maze implements KeyListener {
             return str_r > old_row ? "DOWN" : "UP";
         }
         return "";
+    }
+
+    private void restoreCoins() {
+        for (int i = 0; i < idxCoins.size(); i += 2) {
+            JLabel coinTile = tiles.get(idxCoins.get(i)).get(idxCoins.get(i + 1));
+            coinTile.setText(COIN);
+            coinTile.setIcon(coin);
+            coinTile.setBorder(BorderFactory.createLineBorder(Color.yellow));
+        }
     }
 
     @Override
