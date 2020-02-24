@@ -121,6 +121,9 @@ public class Maze implements KeyListener {
             for (int j = 0; j < row.size(); j++) {
                 JLabel tile = row.get(j);
                 tile.setOpaque(true);
+                if (tile.getText().equals(COIN)) {
+                    totCoins++;
+                }
                 if (showWalls) {
 //                    try {
 //                        TimeUnit.MILLISECONDS.sleep(70);
@@ -134,7 +137,6 @@ public class Maze implements KeyListener {
                     }
                     if (tile.getText().equals(COIN)) {
                         tile.setIcon(coin);
-                        totCoins++;
                         idxCoins.add(i);
                         idxCoins.add(j);
                     }
@@ -320,7 +322,7 @@ public class Maze implements KeyListener {
             isHittedMace = true;
         }
         if (isCoin()) {
-            updatePos(str_row,str_col,TRIED);
+            updatePos(str_row, str_col, TRIED);
             dropBreadcrumb(Color.yellow);
             coin_col++;
         }
@@ -347,7 +349,6 @@ public class Maze implements KeyListener {
                 __init__(MAZEFILE);
             }
         }
-        System.out.println(totCoins+ " " + coin_col);
     }
 
     private String checkChangedCoordinate(int old_row, int old_col, int str_r, int str_c) {
