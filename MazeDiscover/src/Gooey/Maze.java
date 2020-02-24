@@ -46,7 +46,7 @@ public class Maze implements KeyListener {
         config_canvas(canvas);
         addTiles(canvas);
         canvas.setVisible(true);
-        showMaze(false);
+        showMaze(true);
         drawPlayer();
         canvas.addKeyListener(this);
 
@@ -320,6 +320,7 @@ public class Maze implements KeyListener {
             isHittedMace = true;
         }
         if (isCoin()) {
+            updatePos(str_row,str_col,TRIED);
             dropBreadcrumb(Color.yellow);
             coin_col++;
         }
@@ -346,6 +347,7 @@ public class Maze implements KeyListener {
                 __init__(MAZEFILE);
             }
         }
+        System.out.println(totCoins+ " " + coin_col);
     }
 
     private String checkChangedCoordinate(int old_row, int old_col, int str_r, int str_c) {
