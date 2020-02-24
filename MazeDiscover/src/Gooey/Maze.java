@@ -322,8 +322,9 @@ public class Maze implements KeyListener {
             isHittedMace = true;
         }
         if (isCoin()) {
-            updatePos(str_row, str_col, TRIED);
             dropBreadcrumb(Color.yellow);
+            updatePos(str_row, str_col, TRIED);
+            figure.animate(Player, "DOWN");
             coin_col++;
         }
         if (isExit() && coin_col == totCoins) {
