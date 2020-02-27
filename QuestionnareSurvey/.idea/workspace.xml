@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0ae613a1-264f-477e-8087-d414951dc8b3" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1YN6XQ1sLUU5SlLMDTdxngoX4oU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager" selected="Application.Canvas">
+    <configuration name="Canvas" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.artlist_creator.dev.Canvas" />
+      <module name="QuestionnareSurvey" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.artlist_creator.dev.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ResultDialog" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.artlist_creator.dev.ResultDialog" />
+      <module name="QuestionnareSurvey" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.artlist_creator.dev.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Canvas" />
+        <item itemvalue="Application.ResultDialog" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0ae613a1-264f-477e-8087-d414951dc8b3" name="Default Changelist" comment="" />
+      <created>1582770743748</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1582770743748</updated>
+      <workItem from="1582771033894" duration="9001000" />
+      <workItem from="1582789669808" duration="15000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="847" y="272" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582771060783">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state x="847" y="272" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.29.1920.983@0.29.1920.983" timestamp="1582771060783" />
+    <state x="772" y="231" key="#com.intellij.ide.util.MemberChooser" timestamp="1582778118346">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state x="772" y="231" key="#com.intellij.ide.util.MemberChooser/0.29.1920.983@0.29.1920.983" timestamp="1582778118346" />
+    <state width="1874" height="152" key="GridCell.Tab.0.bottom" timestamp="1582780036685">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state width="1874" height="152" key="GridCell.Tab.0.bottom/0.29.1920.983@0.29.1920.983" timestamp="1582780036685" />
+    <state width="1874" height="152" key="GridCell.Tab.0.center" timestamp="1582780036684">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state width="1874" height="152" key="GridCell.Tab.0.center/0.29.1920.983@0.29.1920.983" timestamp="1582780036684" />
+    <state width="1874" height="152" key="GridCell.Tab.0.left" timestamp="1582780036683">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state width="1874" height="152" key="GridCell.Tab.0.left/0.29.1920.983@0.29.1920.983" timestamp="1582780036683" />
+    <state width="1874" height="152" key="GridCell.Tab.0.right" timestamp="1582780036684">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state width="1874" height="152" key="GridCell.Tab.0.right/0.29.1920.983@0.29.1920.983" timestamp="1582780036684" />
+    <state x="665" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1582789670368">
+      <screen x="0" y="29" width="1920" height="983" />
+    </state>
+    <state x="665" y="345" key="com.intellij.ide.util.TipDialog/0.29.1920.983@0.29.1920.983" timestamp="1582789670368" />
+  </component>
+</project>

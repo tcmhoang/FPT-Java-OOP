@@ -6,48 +6,55 @@
 package com.artlist_creator.dev;
 
 import com.artlist_creator.dev.model.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JRadioButton;
+import javax.swing.*;
 
 /**
  *
  * @author Camer
  */
-public class QuestionPanel extends javax.swing.JPanel {
+public class QuestionPanel extends javax.swing.JPanel implements ActionListener {
     
     List<JComponent> ansComp = new ArrayList<>();
+    Question question;
+    String[] answers;
+    int point = 0;
 
     /**
      * Creates new form QuestionPanel
      */
     public QuestionPanel(Question ques) {
         initComponents();
-        q_choices.setLayout(new javax.swing.BoxLayout(q_choices, javax.swing.BoxLayout.Y_AXIS));
-
+        question = ques;
         q_content.setText(ques.getContent());
-        ButtonGroup choices = new ButtonGroup();
+        ButtonGroup onlyOneChoice = new ButtonGroup();
+        int size = (int) ques.getAnswers().stream().filter(Answer::isCorrect).count(), count = 0;
+        answers = new String[size];
         for(int i = 0, n = ques.getAnswers().size() ; i < n; i ++)
         {
-            AbstractButton ansBoxs;
+            AbstractButton answerSections;
             if(ques.isMultipleChoice())
             {
-                ansBoxs = new JCheckBox(ques.getAnswers().get(i).getContent());
-                
+                answerSections = new JCheckBox(ques.getAnswers().get(i).getContent());
             }
             else
             {
-                ansBoxs = new JRadioButton(ques.getAnswers().get(i).getContent());
-                choices.add(ansBoxs);
+                answerSections = new JRadioButton(ques.getAnswers().get(i).getContent());
+                onlyOneChoice.add(answerSections);
             }
-            ansComp.add(ansBoxs);
-            q_choices.add(ansBoxs);  
+            answerSections.addActionListener(this);
+            ansComp.add(answerSections);
+            q_choices.add(answerSections);
+            if(ques.getAnswers().get(i).isCorrect())
+            {
+                answers[count]= ques.getAnswers().get(i).getContent();
+                count++;
+            }
         }
-        
     }
 
     /**
@@ -64,7 +71,7 @@ public class QuestionPanel extends javax.swing.JPanel {
 
         q_content.setText("Question contents");
 
-        q_choices.setLayout(new javax.swing.BoxLayout(q_choices, javax.swing.BoxLayout.LINE_AXIS));
+        q_choices.setLayout(new javax.swing.BoxLayout(q_choices, BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -86,5 +93,39 @@ public class QuestionPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel q_choices;
     private javax.swing.JLabel q_content;
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        if(actionEvent.getSource() instanceof AbstractButton)
+        {
+            AbstractButton btn = (AbstractButton) actionEvent.getSource();
+            if(btn.isSelected() && isTrue(btn))
+            {
+                point ++;
+            }
+            if(!btn.isSelected() && isTrue(btn))
+            {
+                point --;
+            }
+        }
+    }
+
+    private boolean isTrue(AbstractButton k)
+    {
+        String content = k.getText();
+        for(String ans : answers)
+        {
+            if(ans.equals(content))
+            {
+                return true ;
+            }
+        }
+        return false;
+    }
+
+    public int getScore()
+    {
+        return point;
+    }
     // End of variables declaration//GEN-END:variables
 }

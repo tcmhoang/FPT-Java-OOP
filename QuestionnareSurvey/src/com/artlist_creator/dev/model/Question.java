@@ -5,7 +5,6 @@
  */
 package com.artlist_creator.dev.model;
 
-import com.artlist_creator.dev.model.Answer;
 import java.util.ArrayList;
 
 /**

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
+import javax.swing.*;
 
 /**
  *
@@ -30,13 +30,15 @@ public class Canvas extends javax.swing.JFrame implements Runnable, ActionListen
     List<Question> Q_List;
     Map<Question, QuestionPanel> Q_Comp = new HashMap<>();
     Map<JButton, Question> Q_Buttons = new HashMap<>();
-    private short count = 10;
-    private int Qcode;
+    private short count = 10; private boolean isFinished = false;
+    private String leftTime;
+    private int score = 0, avail_score;
+    private final int MAX_SCORE= 100;
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -49,13 +51,7 @@ public class Canvas extends javax.swing.JFrame implements Runnable, ActionListen
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Canvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Canvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Canvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Canvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -74,9 +70,10 @@ public class Canvas extends javax.swing.JFrame implements Runnable, ActionListen
      */
     public Canvas() {
         initComponents();
+        finish.setEnabled(false);
         setResizable(false);
         q_sec.setLayout(new CardLayout());
-        q_Indicator.setLayout(new FlowLayout());
+        q_Indicator.setLayout(new BoxLayout(q_Indicator,BoxLayout.Y_AXIS));
         Q_List = new Contents().getData();
         for(int i = 0, n = Q_List.size(); i < n ; i ++)
         {
@@ -96,18 +93,19 @@ public class Canvas extends javax.swing.JFrame implements Runnable, ActionListen
             q_Indicator.add(btnNum);
             
             btnNum.addActionListener(this);
+
+            q.getAnswers().stream().filter(Answer::isCorrect).forEach(k -> avail_score ++);
         }
-        Qcode = displayQuestion(Q_List.get(0));
+        displayQuestion(Q_List.get(0));
         Thread t = new Thread(this);
         t.start();
     }
 
-    public int displayQuestion(Question q)
+    public void displayQuestion(Question q)
     {
         CardLayout layout = (CardLayout) q_sec.getLayout();
         layout.show(q_sec, q.getId() + "");
         q_Quest.setText( "Question "+q.getId() + "");
-        return q.getId();
     }
     
     @Override
@@ -121,15 +119,28 @@ public class Canvas extends javax.swing.JFrame implements Runnable, ActionListen
                 Logger.getLogger(Canvas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        ResultDialog res = new ResultDialog(this, true, Qcode);
-        res.setVisible(true);
+        if(!isFinished) {
+            getTotScore();
+            ResultDialog res = new ResultDialog();
+            res.setScore(score);
+            res.setVisible(true);
+            dispose();
+        }
     }
 
     private void updateTime() {
         int hour = count / 3600,
-                mins = count % 3600 / 60,
+                minutes = count % 3600 / 60,
                 secs = count % 60;
-        Timer.setText("Time left " + hour + ":" + mins + ":" + secs);
+        leftTime = "Time left " + hour + ":" + minutes + ":" + secs;
+        Timer.setText(leftTime);
+
+    }
+
+    private void getTotScore()
+    {
+        Q_Comp.values().forEach(k -> score += k.getScore());
+        score = (int)(Math.round(score * 1.0 /avail_score * MAX_SCORE));
     }
 
     /**
@@ -144,7 +155,7 @@ public class Canvas extends javax.swing.JFrame implements Runnable, ActionListen
         Timer = new javax.swing.JLabel();
         q_Quest = new javax.swing.JLabel();
         q_sec = new javax.swing.JPanel();
-        q_buttons = new javax.swing.JPanel();
+        JPanel q_buttons = new JPanel();
         verified = new javax.swing.JCheckBox();
         finish = new javax.swing.JButton();
         q_Indicator = new javax.swing.JPanel();
@@ -167,6 +178,12 @@ public class Canvas extends javax.swing.JFrame implements Runnable, ActionListen
         verified.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 verifiedActionPerformed(evt);
+            }
+        });
+        finish.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                finishActionPerformed(actionEvent);
             }
         });
         q_buttons.add(verified);
@@ -229,10 +246,23 @@ public class Canvas extends javax.swing.JFrame implements Runnable, ActionListen
     private void verifiedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifiedActionPerformed
         // TODO add your handling code here:
         if (verified.isSelected()) {
-            ResultDialog result = new ResultDialog(this, true, Qcode);
-            result.setVisible(true);
+            finish.setEnabled(true);
+        }
+        else {
+            finish.setEnabled(false);
         }
     }//GEN-LAST:event_verifiedActionPerformed
+
+    private void  finishActionPerformed(ActionEvent e)
+    {
+
+        var dialog = new ResultDialog(leftTime);
+        isFinished = true;
+        getTotScore();
+        dialog.setScore(score);
+        dialog.setVisible(true);
+        dispose();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -240,10 +270,10 @@ public class Canvas extends javax.swing.JFrame implements Runnable, ActionListen
     private javax.swing.JButton finish;
     private javax.swing.JPanel q_Indicator;
     private javax.swing.JLabel q_Quest;
-    private javax.swing.JPanel q_buttons;
     private javax.swing.JPanel q_sec;
     private javax.swing.JCheckBox verified;
     // End of variables declaration//GEN-END:variables
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
