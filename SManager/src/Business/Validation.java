@@ -11,20 +11,16 @@ public class Validation {
 
     /**
      * Check student if they already in the Student List
-     * @param listStudent list of all students
-     * @param id id of students
-     * @param studentName Name of Students
-     * @param semester terms currently in
-     * @param courseName course already taken
+     * @param studentManagement list of students
+     * @param s a student obj to check
      * @return true if that student existed otherwise return false
      */
-    public static boolean checkStudentExist(StudentManagement studentManagement, String id,
-                                            String studentName, String semester, String courseName) {
+    public static boolean checkStudentExist(StudentManagement studentManagement,Student s) {
         for (Student student : studentManagement.getStudentList()) {
-            if (id.equalsIgnoreCase(student.getId())
-                    && studentName.equalsIgnoreCase(student.getStudentName())
-                    && semester.equalsIgnoreCase(student.getSemester())
-                    && courseName.equalsIgnoreCase(student.getCourseName())) {
+            if (s.getId().equalsIgnoreCase(student.getId())
+                    && s.getStudentName().equalsIgnoreCase(student.getStudentName())
+                    && s.getSemester().equalsIgnoreCase(student.getSemester())
+                    && s.getCourseName().equalsIgnoreCase(student.getCourseName())) {
                 return false;
             }
         }
@@ -39,8 +35,8 @@ public class Validation {
      * @param total total course in report
      * @return true if report is existed otherwise return false
      */
-    public static boolean checkReportExist(ArrayList<Report> listReport, String name,
-                                           String course, int total) {
+    public static boolean isReportExisted(List<Report> listReport, String name,
+                                          String course, int total) {
         for (Report report : listReport) {
             if (name.equalsIgnoreCase(report.getStudentName())
                     && course.equalsIgnoreCase(report.getCourseName())
@@ -72,18 +68,14 @@ public class Validation {
     /**
      * Checks usr if them make changes or not
      * @param student Student is in considered
-     * @param ID user's changed ID
-     * @param name user's changed Name
-     * @param semester user's changed Semester
-     * @param course user's changed course
+     * @param other other student to compare with
      * @return true if them already change student's infos
      */
-    public static boolean checkChangeInformation(Student student, String ID,
-                                                 String name, String semester, String course) {
-        return !ID.equalsIgnoreCase(student.getId())
-                || !name.equalsIgnoreCase(student.getStudentName())
-                || !semester.equalsIgnoreCase(student.getSemester())
-                || !course.equalsIgnoreCase(student.getCourseName());
+    public static boolean checkChangeInformation(Student student, Student other) {
+        return !other.getId().equalsIgnoreCase(student.getId())
+                || !other.getStudentName().equalsIgnoreCase(student.getStudentName())
+                || !other.getSemester().equalsIgnoreCase(student.getSemester())
+                || !other.getCourseName().equalsIgnoreCase(student.getCourseName());
     }
 
 }

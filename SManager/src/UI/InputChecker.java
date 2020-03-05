@@ -83,7 +83,7 @@ public class InputChecker {
      * @return true if user input like "Y", "y", "N,"n" otherwise return false
      */
     //check user input u / d
-    public static boolean checkInputUD() {
+    public static boolean isUpdate() {
         //loop until user input correct
         while (true) {
             String result = checkInputString();

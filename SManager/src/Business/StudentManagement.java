@@ -1,9 +1,9 @@
 package Business;
 
+import Entity.Report;
 import Entity.Student;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class StudentManagement {
     private List<Student> ls = new ArrayList<>();
@@ -11,27 +11,24 @@ public class StudentManagement {
 
     /**
      * Add student in list
+     *
      * @param student list of students
      */
-    public void add(Student student)
-    {
+    public void add(Student student) {
         ls.add(student);
-        count ++;
+        count++;
     }
 
-    public List<Student> getStudentList()
-    {
+    public List<Student> getStudentList() {
         return ls;
     }
 
-    public void remove(Student student)
-    {
-        if(count == 0)
-        {
+    public void remove(Student student) {
+        if (count == 0) {
             return;
         }
         ls.remove(student);
-        count --;
+        count--;
     }
 
     public int getCount() {
@@ -41,6 +38,7 @@ public class StudentManagement {
 
     /**
      * Travel through list and get a list of student has same ID
+     *
      * @param id ID needed to search
      * @return a list of students has same ID
      */
@@ -54,8 +52,7 @@ public class StudentManagement {
         return listsStudent;
     }
 
-    public boolean isGreaterThan10()
-    {
+    public boolean isGreaterThan10() {
         return count > 10;
     }
 
@@ -65,6 +62,7 @@ public class StudentManagement {
 
     /**
      * Allow student search through list of students and return 'em in List Format
+     *
      * @param name student's name need to find
      * @return a list of student has exact name when user typed in
      */
@@ -80,7 +78,45 @@ public class StudentManagement {
         return listStudentFindByName;
     }
 
+    public void updateStuInfo(Student student, Student edS) {
+        student = edS;
+    }
 
+    /**
+     * Print all students in the list
+     */
+    public List<Report> getReport() {
+        List<Report> lr = new ArrayList<>();
+        var total = 0;
+        Map<String, Set<String>> coursesPerID = new HashMap<>();
+        for (Student student : ls) {
+            boolean isAdded = false;
+            String id = student.getId();
+            String courseName = student.getCourseName();
+            String studentName = student.getStudentName();
 
+            if(!coursesPerID.containsKey(id))
+            {
+                coursesPerID.put(id,new HashSet<>());
+                coursesPerID.get(id).add(courseName);
+                total ++;
+                isAdded = true;
+            }
+            else {
+                Set<String> courses = coursesPerID.get(id);
+                if(!courses.contains(courseName))
+                {
+                    total ++;
+                    courses.add(courseName);
+                    isAdded = true;
+                }
+            }
 
+            if (isAdded &&Validation.isReportExisted(lr, studentName,
+                    courseName, total)) {
+                lr.add(new Report(student.getStudentName(), courseName, total));
+            }
+        }
+        return lr;
+    }
 }

@@ -54,8 +54,4 @@ public class Student implements Comparable<Student> {
     public int compareTo(Student t) {
         return t.studentName.compareTo(this.studentName);
     }
-
-    public void print() {
-        System.out.printf("%-15s%-15s%-15s\n", studentName, semester, courseName);
-    }
 }
