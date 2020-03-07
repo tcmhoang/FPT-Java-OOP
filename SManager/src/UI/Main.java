@@ -12,10 +12,10 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        var studentManager = new StudentManagement();
-        studentManager.add(new Student("1", "Pham Ngoc Hoa", "Spring", "java"));
-        studentManager.add(new Student("2", "Do Quang Hiep", "Summer", ".net"));
-        studentManager.add(new Student("3", "Nguyen Xuan Cuong", "Spring", "c/c++"));
+        StudentManagement studentManagement = new StudentManagement();
+        studentManagement.add(new Student("1", "Pham Ngoc Hoa", "Spring", "java"));
+        studentManagement.add(new Student("2", "Do Quang Hiep", "Summer", ".net"));
+        studentManagement.add(new Student("3", "Nguyen Xuan Cuong", "Spring", "c/c++"));
 
         //loop until user want to exit program
         while (true) {
@@ -26,24 +26,24 @@ public class Main {
             switch (choice) {
                 case 1:
                     //if number of students greater than 10 ask user continue or not
-                    if (studentManager.isGreaterThan10()) {
+                    if (studentManagement.isGreaterThan10()) {
                         System.out.print("Do you want to continue (Y/N): ");
                         if (!InputChecker.checkInputYN()) {
                             break;
                         }
                     }
-                    var students = Helper.createStudent(studentManager);
-                    studentManager.add(students);
+                    var students = Helper.createStudent(studentManagement);
+                    studentManagement.add(students);
                     break;
                 case 2:
                     //check list empty
-                    if (studentManager.isEmpty()) {
+                    if (studentManagement.isEmpty()) {
                         System.err.println("List empty.");
                         break;
                     }
                     System.out.print("Enter name to search: ");
                     name = InputChecker.checkInputString();
-                    List<Student> listStuByName = studentManager.getListStudentByName(name);
+                    List<Student> listStuByName = studentManagement.getListStudentByName(name);
                     if (listStuByName.isEmpty()) {
                         System.err.println("Not exist.");
                     } else {
@@ -57,13 +57,13 @@ public class Main {
                     break;
                 case 3:
                     //check list empty
-                    if (studentManager.isEmpty()) {
+                    if (studentManagement.isEmpty()) {
                         System.err.println("List empty.");
                         break;
                     }
                     System.out.print("Enter ID: ");
                     id = InputChecker.checkInputString();
-                    List<Student> listStuByID = studentManager.getListStudentById(id);
+                    List<Student> listStuByID = studentManagement.getListStudentById(id);
                     if (listStuByID.isEmpty()) {
                         System.err.println("Not found student.");
                     } else {
@@ -77,23 +77,23 @@ public class Main {
                                 System.err.println("Nothing change.");
                             }
                             //check student exist or not
-                            if (Validation.checkStudentExist(studentManager, edited)) {
-                                studentManager.updateStuInfo(student, edited);
+                            if (Validation.checkStudentExist(studentManagement, edited)) {
+                                studentManagement.updateStuInfo(student, edited);
                                 System.err.println("Update success.");
                             }
                         } else {
-                            studentManager.remove(student);
+                            studentManagement.remove(student);
                             System.err.println("Delete success.");
                         }
                     }
                     break;
                 case 4:
                     //check list empty
-                    if (studentManager.isEmpty()) {
+                    if (studentManagement.isEmpty()) {
                         System.err.println("List empty.");
                         break;
                     }
-                    List<Report> reports = studentManager.getReport();
+                    List<Report> reports = studentManagement.getReport();
                     for (Report report : reports) {
                         System.out.printf("%-15s|%-10s|%-5d\n", report.getStudentName(),
                                 report.getCourseName(), report.getTotalCourse());
