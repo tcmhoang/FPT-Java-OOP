@@ -123,23 +123,17 @@ public class General {
         return new Product(code, name, quantity, saled, price);
     }
 
-    public static Product addCustomer() {
+    public static Customer addCustomer() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the customer you want to add!");
-        String code, name;
-        int quantity, saled;
-        double price;
-        System.out.print("Product ID: ");
+        String code, name,phone;
+        System.out.print("Customer ID: ");
         code = input.next();
-        System.out.print("Product Name: ");
+        System.out.print("Customer Name: ");
         name = input.next();
-        System.out.print("Quantity: ");
-        quantity = input.nextInt();
-        System.out.print("Number of the saled: ");
-        saled = input.nextInt();
-        System.out.println("How much ?");
-        price = input.nextDouble();
-        return new Product(code, name, quantity, saled, price);
+        System.out.println("Phone ?");
+        phone = input.next();
+        return new Customer(code, name, phone);
     }
 
     public static Order addOrder(List products, List consumers) {
