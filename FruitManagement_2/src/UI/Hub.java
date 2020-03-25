@@ -1,8 +1,7 @@
 package UI;
 
-import Business.Validation;
 import Entity.Fruit;
-import Entity.Order;
+import Entity.OrderItem;
 
 import java.util.List;
 
@@ -22,47 +21,38 @@ public class Hub
     }
 
 
-    //display list order
-    static void showOrderInfo(List<Order> lo)
+    /**
+     * display list order
+     *
+     * @param lo listOfOrder
+     */
+    static void showOrderInfo(List<OrderItem> lo)
     {
-        double total = 0;
         System.out.printf("%15s%15s%15s%15s\n", "Product", "Quantity", "Price", "Amount");
-        for (Order order : lo)
+        for (OrderItem orderItem : lo)
         {
-            System.out.printf("%15s%15d%15.0f$%15.0f$\n", order.getFruitName(),
-                    order.getQuantity(), order.getPrice(),
-                    order.getPrice() * order.getQuantity());
-            total += order.getPrice() * order.getQuantity();
+            System.out.printf("%15s%15d%15.0f$%15.0f$\n", orderItem.getFruitName(),
+                    orderItem.getQuantity(), orderItem.getPrice(),
+                    orderItem.getPrice() * orderItem.getQuantity());
         }
-        System.out.println("Total: " + total);
     }
 
-    //display list fruit in shop
+    /**
+     * display list fruit in shop
+     *
+     * @param lf list of fruits
+     */
     static void displayFruits(List<Fruit> lf)
     {
         int countItem = 1;
         System.out.printf("%-10s%-20s%-20s%15s\n", "Item", "Fruit name", "Origin", "Price");
         for (Fruit fruit : lf)
-        {
             //check shop have item or not
             if (fruit.getQuantity() != 0)
             {
                 System.out.printf("%-10d%-20s%-20s%15.0f$\n", countItem++,
                         fruit.getFruitName(), fruit.getOrigin(), fruit.getPrice());
             }
-        }
     }
 
-    //if order exist then update order
-    static void updateOrder(List<Order> lo, String id, int quantity)
-    {
-        for (Order order : lo)
-        {
-            if (order.getFruitId().equalsIgnoreCase(id))
-            {
-                order.setQuantity(order.getQuantity() + quantity);
-                return;
-            }
-        }
-    }
 }

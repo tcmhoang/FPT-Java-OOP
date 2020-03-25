@@ -1,64 +1,62 @@
 package Entity;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order
 {
-
-    private String fruitId;
-    private String fruitName;
-    private int quantity;
-    private double price;
+    private String name;
+    private List<OrderItem> orderItems;
 
     public Order()
     {
+        orderItems = new ArrayList<>();
     }
 
-    public Order(String fruitId, String fruitName, int quantity, double price)
+    public String getName()
     {
-        this.fruitId = fruitId;
-        this.fruitName = fruitName;
-        this.quantity = quantity;
-        this.price = price;
+        return name;
     }
 
-    public String getFruitId()
+    public void setName(String name)
     {
-        return fruitId;
+        this.name = name;
     }
 
-    public void setFruitId(String fruitId)
+    public List<OrderItem> getOrderItems()
     {
-        this.fruitId = fruitId;
+        return orderItems;
     }
 
-    public String getFruitName()
+    public void add(OrderItem item)
     {
-        return fruitName;
+        orderItems.add(item);
     }
 
-    public void setFruitName(String fruitName)
+    //add orderItems
+    public  boolean isItemExisted(String id)
     {
-        this.fruitName = fruitName;
+        //check list empty user can't buy
+        return orderItems.stream().anyMatch(orderItem -> orderItem.getFruitId().equalsIgnoreCase(id));
     }
 
-    public int getQuantity()
+    public double getTotal()
     {
-        return quantity;
+        return orderItems.stream().mapToDouble(x -> x.getPrice() * x.getQuantity()).sum();
     }
-
-    public void setQuantity(int quantity)
+    /**
+     * Update newly created order if thw order is already order
+     *
+     * @param id       Fruit ID
+     * @param quantity quantity of fruit
+     */
+    public void updateOrder(String id, int quantity)
     {
-        this.quantity = quantity;
+        for (OrderItem orderItem : orderItems)
+            if (orderItem.getFruitId().equalsIgnoreCase(id))
+            {
+                orderItem.setQuantity(orderItem.getQuantity() + quantity);
+                return;
+            }
     }
-
-    public double getPrice()
-    {
-        return price;
-    }
-
-    public void setPrice(double price)
-    {
-        this.price = price;
-    }
-
 }

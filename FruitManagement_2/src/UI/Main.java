@@ -1,13 +1,11 @@
 package UI;
 
 import Business.Management;
-import Business.Validation;
 import Entity.Fruit;
+import Entity.OrderItem;
 import Entity.Order;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Main
 {
@@ -50,11 +48,11 @@ public class Main
                     }
                     break;
                 case 2:
-                    Map<String, List<Order>> orderData = management.getOrderList();
-                    for (String name : orderData.keySet())
+                    List<Order> orderData = management.getRecord();
+                    for (Order rec : orderData)
                     {
-                        System.out.println("Customer: " + name);
-                        List<Order> lo = orderData.get(name);
+                        System.out.println("Customer: " + rec.getName());
+                        List<OrderItem> lo = rec.getOrderItems();
                         Hub.showOrderInfo(lo);
                     }
                     break;
@@ -65,7 +63,7 @@ public class Main
                         return;
                     }
                     //loop until user don't want to buy continue
-                    List<Order> lo = new ArrayList<>();
+                    Order order = new Order();
                     while (true)
                     {
                         List<Fruit> fruitData = management.getFruitList();
@@ -77,18 +75,20 @@ public class Main
                         int quantity = InputChecker.checkInputIntLimit(1, fruit.getQuantity());
                         fruit.setQuantity(fruit.getQuantity() - quantity);
                         //check item exist or not
-                        if (Validation.isItemExisted(lo, fruit.getFruitId()))
-                            Hub.updateOrder(lo, fruit.getFruitId(), quantity);
+                        if (order.isItemExisted(fruit.getFruitId()))
+                            order.updateOrder(fruit.getFruitId(), quantity);
                         else
-                            lo.add(new Order(fruit.getFruitId(), fruit.getFruitName(),
+                            order.add(new OrderItem(fruit.getFruitId(), fruit.getFruitName(),
                                     quantity, fruit.getPrice()));
                         if (!InputChecker.isYNInput())
                             break;
                     }
-                    Hub.showOrderInfo(lo);
+                    Hub.showOrderInfo(order.getOrderItems());
+                    System.out.println("Total: " + order.getTotal());
                     System.out.print("Enter name: ");
                     String name = InputChecker.checkInputString();
-                    management.addRec(name, lo);
+                    order.setName(name);
+                    management.addOrder(order);
                     System.err.println("Add successful");
                     break;
                 case 4:

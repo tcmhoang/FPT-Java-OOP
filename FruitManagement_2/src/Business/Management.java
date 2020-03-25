@@ -4,21 +4,19 @@ import Entity.Fruit;
 import Entity.Order;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 
 public class Management
 {
     List<Fruit> fruitList;
-    Map<String, List<Order>> orderList;
+    List<Order> orders;
 
 
     public Management()
     {
         fruitList = new ArrayList<>();
-        orderList = new Hashtable<>();
+        orders = new ArrayList<>();
     }
 
     public void addFruit(Fruit fruit)
@@ -26,22 +24,16 @@ public class Management
         fruitList.add(fruit);
     }
 
-    public void addRec(String name, List<Order> orders)
+    public void addOrder(Order order)
     {
-        orderList.put(name,orders);
+        orders.add(order);
     }
 
     //check id exist
     public boolean checkFruitIdExist(String id)
     {
-        for (Fruit fruit : fruitList)
-        {
-            if (id.equalsIgnoreCase(fruit.getFruitId()))
-            {
-                return false;
-            }
-        }
-        return true;
+        return fruitList.stream().anyMatch(fruit ->
+                id.equalsIgnoreCase(fruit.getFruitId()));
     }
 
     public List<Fruit> getFruitList()
@@ -49,13 +41,19 @@ public class Management
         return fruitList;
     }
 
-    public Map<String, List<Order>> getOrderList()
+    public List<Order> getRecord()
     {
-        return orderList;
+        return orders;
     }
 
 
-    //get fruint user want to by
+    /**
+     * get fruit user want to by cardinal number
+     * show in dispplay fruit method func
+     *
+     * @param item
+     * @return
+     */
     public Fruit getFruitByCarNum(int item)
     {
         int countItem = 1;
