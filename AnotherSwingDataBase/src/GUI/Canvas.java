@@ -3,10 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI;
 
+import DAL.ArticleDAO;
+import DAL.AuthorDAO;
+import java.awt.BorderLayout;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -14,21 +28,45 @@ import javax.swing.BoxLayout;
  */
 public class Canvas extends javax.swing.JFrame {
 
+    List<AuthorPanel> tiles;
+
+    final static String DATE_FORMAT = "yyyy-MM-dd";
+
+    public static DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+
+    public static boolean isDateValid(String date) {
+        try {
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
     /**
      * Creates new form Canvas
      */
     public Canvas() {
         initComponents();
+
+        ArticlePanel h1 = new ArticlePanel();
+        header.setLayout(new BorderLayout());
+        header.add(h1, BorderLayout.CENTER);
+
         BoxLayout boxlayout = new BoxLayout(body, BoxLayout.Y_AXIS);
         body.setLayout(boxlayout);
-        AuthorPanel a1 = new AuthorPanel();
-        AuthorPanel a2 = new AuthorPanel();
-        AuthorPanel a3 = new AuthorPanel();
-        body.add(a1);
-        body.add(a2);
-        body.add(a3);
+        AuthorPanel a1 = new AuthorPanel(this);
+        body.add(a1, 0);
+        body.add(Box.createVerticalGlue());
+
+        tiles = new ArrayList<>();
+        tiles.add(a1);
+
         pack();
-        setSize(330,550);
+        setSize(330, 620);
+        setResizable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     /**
@@ -43,9 +81,12 @@ public class Canvas extends javax.swing.JFrame {
         header = new javax.swing.JPanel();
         wrapper = new javax.swing.JScrollPane();
         body = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(330, 550));
+        setTitle("Articles Managenent");
+
+        header.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -60,6 +101,8 @@ public class Canvas extends javax.swing.JFrame {
 
         wrapper.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        body.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+
         javax.swing.GroupLayout bodyLayout = new javax.swing.GroupLayout(body);
         body.setLayout(bodyLayout);
         bodyLayout.setHorizontalGroup(
@@ -73,62 +116,99 @@ public class Canvas extends javax.swing.JFrame {
 
         wrapper.setViewportView(body);
 
+        jButton1.setText("Save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(wrapper)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(wrapper))
+                .addComponent(wrapper, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        String id = ((ArticlePanel) header.getComponent(0)).article.getID();
+        if (id == null || id.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Missing ID Article", "Critical Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        System.out.println(((ArticlePanel) header.getComponent(0)).article);
+        if (!((ArticlePanel) header.getComponent(0)).article.isValid()) {
+            JOptionPane.showMessageDialog(this, "Missing Article Data", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        System.out.println(tiles.get(0).author);
+        if (tiles.stream().anyMatch(k -> k.author.isValid() == false)) {
+            JOptionPane.showMessageDialog(this, "Invalid Author Data", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        ArticleDAO articleDAO = new ArticleDAO();
+        articleDAO.upload(((ArticlePanel) header.getComponent(0)).article);
+        AuthorDAO adao = new AuthorDAO();
+        tiles.stream().map(k -> k.author).collect(Collectors.toCollection(ArrayList::new)).forEach(a -> adao.upload(a, id));
+
+        header.removeAll();
+        body.removeAll();
+        tiles.removeAll(tiles);
+
+        ArticlePanel h1 = new ArticlePanel();
+        header.add(h1, BorderLayout.CENTER);
+
+        AuthorPanel a1 = new AuthorPanel(this);
+        body.add(a1, 0);
+        body.add(Box.createVerticalGlue());
+
+        tiles.add(a1);
+
+        pack();
+
+        JOptionPane.showMessageDialog(this, "Upload Sucessful");
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Canvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Canvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Canvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Canvas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+          try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Canvas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Canvas().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> {
+            new Canvas().setVisible(true);
+          });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel body;
+    javax.swing.JPanel body;
     private javax.swing.JPanel header;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane wrapper;
     // End of variables declaration//GEN-END:variables
 }

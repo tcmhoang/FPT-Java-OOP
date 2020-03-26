@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Model;
 
 import java.sql.Date;
@@ -13,6 +12,7 @@ import java.sql.Date;
  * @author Camer
  */
 public class Author {
+
     private String ID, name, instituton, gender;
     private Date dob;
 
@@ -54,6 +54,15 @@ public class Author {
 
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    public boolean isValid() {
+        return dob != null && gender != null && instituton != null && name != null && ID != null;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" + "ID=" + ID + ", name=" + name + ", instituton=" + instituton + ", gender=" + gender + ", dob=" + dob + '}';
     }
     
 }

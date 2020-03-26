@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Model;
 
 import java.sql.Date;
+
 
 /**
  *
  * @author Camer
  */
 public class Article {
+
     private String ID, title;
     private Date date;
 
@@ -38,6 +39,16 @@ public class Article {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public boolean isValid()
+    {
+        return date != null && title != null && ID != null;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" + "ID=" + ID + ", title=" + title + ", date=" + date + '}';
     }
     
 }

@@ -27,7 +27,7 @@ public class BaseDAO {
             Logger.getLogger(BaseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=test;user=artlist;password=777; [artlist on Default schema]";
+        String url = "jdbc:sqlserver://localhost:1433;databaseName=test;user=artlist;password=777";
         
         try {
             connection = DriverManager.getConnection(url);
