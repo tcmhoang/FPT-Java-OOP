@@ -28,7 +28,7 @@ public class Main
         }
         int[] a = IntStream.generate(() -> new Random().nextInt(1000)).limit(quan).toArray();
         System.out.println(Arrays.toString(a));
-        BubbleSort.sort(a);
+        BubbleSort.sort(a,false);
         System.out.println(Arrays.toString(a));
 
     }
