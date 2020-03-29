@@ -82,10 +82,12 @@ public class UsrDataManagement
 
     {
         File file = new File("Test/user.dat");
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
         try
         {
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            fileReader = new FileReader(file);
+            bufferedReader = new BufferedReader(fileReader);
             String line;
             while ((line = bufferedReader.readLine()) != null)
             {
@@ -95,10 +97,13 @@ public class UsrDataManagement
                     return account[1];
                 }
             }
-            bufferedReader.close();
-            fileReader.close();
+
         } finally
         {
+            if (bufferedReader != null)
+                bufferedReader.close();
+            if (fileReader != null)
+                fileReader.close();
             return null;
         }
     }
