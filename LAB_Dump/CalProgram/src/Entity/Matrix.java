@@ -6,22 +6,20 @@ import java.util.Arrays;
 public class Matrix
 {
     private int[][] content;
-    private int row, col; //
 
     public Matrix(int[][] content)
     {
         this.content = content;
-        col = content[0].length;
     }
 
     public int getLenRow()
     {
-        return row;
+        return content.length;
     }
 
     public int getLenCol()
     {
-        return col;
+        return content[0].length;
     }
 
     public int[][] getContent()
@@ -31,7 +29,7 @@ public class Matrix
 
     public boolean setIn(int idxRow, int idxCol, int val)
     {
-        if (idxRow >= row || idxCol >= col)
+        if (idxRow >= getLenRow() || idxCol >= getLenCol())
             return false;
         else
             content[idxRow][idxCol] = val;
@@ -40,7 +38,7 @@ public class Matrix
 
     public boolean addIn(int idxRow, int idxCol, int val)
     {
-        if (idxRow >= row || idxCol >= col)
+        if (idxRow >= getLenRow() || idxCol >= getLenCol())
             return false;
         else
             content[idxRow][idxCol] += val;
@@ -54,7 +52,7 @@ public class Matrix
 
     public Integer get(int idxRow, int idxCol)
     {
-        if (idxRow >= row || idxCol >= col)
+        if (idxRow >= getLenRow() || idxCol >= getLenCol())
             return null;
         else
             return content[idxRow][idxCol];
