@@ -13,13 +13,13 @@ public class MatricesCalc
         return Arrays.deepToString(matrix1.getContent()) + "\n" + operator + "\n" + Arrays.deepToString(matrix2.getContent()) + "\n=";
     }
 
-    public static Matrix add(Matrix matrix1, Matrix matrix2)
+    public static Matrix add(Matrix matrix1, Matrix matrix2) throws Exception
     {
         if (matrix1.getLenRow() == matrix2.getLenRow() && matrix2.getLenCol() == matrix1.getLenCol())
         {
             int row = matrix1.getLenRow();
             int col = matrix1.getLenCol();
-            Matrix res = new Matrix(new int[row][col]);
+            Matrix res = new Matrix(row, col);
             for (int i = 0; i < row; i++)
             {
                 for (int j = 0; j < col; j++)
@@ -30,16 +30,16 @@ public class MatricesCalc
             }
             return res;
         }
-        return null;
+        throw new Exception("Cannot add 2 matrix do not have same dimension");
     }
 
-    public static Matrix sub(Matrix matrix1, Matrix matrix2)
+    public static Matrix sub(Matrix matrix1, Matrix matrix2) throws Exception
     {
         if (matrix1.getLenRow() == matrix2.getLenRow() && matrix2.getLenCol() == matrix1.getLenCol())
         {
             int row = matrix1.getLenRow();
             int col = matrix1.getLenCol();
-            Matrix res = new Matrix(new int[row][col]);
+            Matrix res = new Matrix(row, col);
             for (int i = 0; i < row; i++)
             {
                 for (int j = 0; j < col; j++)
@@ -50,10 +50,10 @@ public class MatricesCalc
             }
             return res;
         }
-        return null;
+        throw new Exception("Cannot subtract 2 matrix do not have same dimension");
     }
 
-    public static Matrix mul(Matrix matrix1, Matrix matrix2)
+    public static Matrix mul(Matrix matrix1, Matrix matrix2) throws Exception
     {
         int row1 = matrix1.getLenRow();
         int col1 = matrix1.getLenCol();
@@ -61,9 +61,9 @@ public class MatricesCalc
         int col2 = matrix2.getLenCol();
         if (col1 != row2)
         {
-            return null;
+            throw new Exception("Cannot mul 2 matrix do not have invalid dimensions");
         }
-        Matrix res = new Matrix(new int[row1][col2]);
+        Matrix res = new Matrix(row1, col2);
 
         res.zeros();
 

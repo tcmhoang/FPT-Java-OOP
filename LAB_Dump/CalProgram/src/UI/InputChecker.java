@@ -49,16 +49,16 @@ public class InputChecker
         int row = InputChecker.checkInputInt();
         System.out.print("Enter Colum Matrix: ");
         int col = InputChecker.checkInputInt();
-        int[][] matrix = new int[row][col];
+        Matrix res = new Matrix(row,col);
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
                 System.out.print("Enter Matrix value " + "[" + i + "]" + "[" + j + "]:");
-                matrix[i][j] = checkInputInt();
+                res.setIn(i,j,checkInputInt());
             }
         }
-        return new Matrix(matrix);
+        return res;
     }
 
 }

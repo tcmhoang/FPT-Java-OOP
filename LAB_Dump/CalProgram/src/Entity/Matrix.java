@@ -7,9 +7,10 @@ public class Matrix
 {
     private int[][] content;
 
-    public Matrix(int[][] content)
+    public Matrix(int row, int col)
     {
-        this.content = content;
+
+        content = new int[row][col];
     }
 
     public int getLenRow()
