@@ -11,7 +11,9 @@ public class Main
         {
             this.value = value;
         }
-    };
+    }
+
+    ;
 
     public static void main(String[] args)
     {
@@ -41,30 +43,25 @@ public class Main
             to = Base.DEC;
         else
             to = Base.HEX;
-        if (from == to)
+        if (from == to) // If base covert from == base convert to
             System.out.println(num);
         else
         {
-            int temp = -1;
-            if (indicator != 2)
-            {
-                temp = BaseConversion.convertToDec(num, from.value);
-                if (temp == -1)
-                {
-                    System.err.println("INVALID NUMBER");
-                    return;
-                }
+            //from != to
+            Integer temp = BaseConversion.convertToDec(num, from.value);
 
-            }
-            else
+            if (temp == null)
             {
-                if (num.matches("-?\\d+"))
-                    temp = Integer.parseInt(num);
-                else
-                {
-                    System.err.println("INVALID NUMBER");
-                    return;
-                }
+                System.err.println("INVALID NUMBER");
+                return;
+            }
+
+            if (to == Base.DEC)
+            {
+
+                System.out.println(temp);
+                return;
+
             }
             String res = BaseConversion.convertFromDec(temp, to.value);
             System.out.println(res);

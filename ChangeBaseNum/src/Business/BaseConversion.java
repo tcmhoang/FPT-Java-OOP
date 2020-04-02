@@ -32,7 +32,7 @@ public class BaseConversion
             return (char) (num - 10 + 65);
     }
 
-    public static int convertToDec(String str,
+    public static Integer convertToDec(String str,
                                    int indicator)
     {
         int base = getBase(indicator);
@@ -43,7 +43,7 @@ public class BaseConversion
         for (int i = len - 1; i >= 0; i--)
         {
             if (val(str.charAt(i)) >= base)
-                return -1;
+                return null;
 
             num += val(str.charAt(i)) * power;
             power = power * base;
